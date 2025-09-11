@@ -10,7 +10,7 @@
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background: #0a0f2c; /* fundo azul escuro */
+    background: #0a0f2c; 
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -54,6 +54,13 @@ canvas {
     animation: neonPulse 1.5s ease-in-out infinite alternate;
 }
 
+/* ====== Texto do criador ====== */
+.creator {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #fca5a5;
+}
+
 /* ====== Título e Texto ====== */
 h1 {
     margin-bottom: 15px;
@@ -94,7 +101,7 @@ p {
     justify-content: center;
     gap: 10px;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px #ef4444, 0 0 20px #dc2626, 0 0 30px #ef4444; /* brilho reduzido */
+    box-shadow: 0 0 10px #ef4444, 0 0 20px #dc2626, 0 0 30px #ef4444;
 }
 
 .btn i {
@@ -104,7 +111,7 @@ p {
 
 .btn:hover {
     transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 0 20px #ef4444, 0 0 30px #dc2626, 0 0 40px #f87171; /* brilho reduzido no hover */
+    box-shadow: 0 0 20px #ef4444, 0 0 30px #dc2626, 0 0 40px #f87171;
     background: linear-gradient(135deg, #dc2626, #ef4444, #f87171);
     background-size: 400% 400%;
     animation: gradientShift 3s ease infinite, btnHoverPulse 0.5s ease infinite alternate;
@@ -156,6 +163,7 @@ p {
 
 <div class="container">
     <div class="logo"></div> <!-- Logo animado -->
+    <div class="creator">Meu criador: Miguel Durso</div>
     <h1>Bem-vindo!</h1>
     <p>Aqui você tem acesso aos hacks mais fáceis.</p>
     <div class="buttons-container">
@@ -169,7 +177,6 @@ p {
     </div>
 </div>
 
-<!-- Som futurista -->
 <audio id="click-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-casino-notification-211.wav"></audio>
 
 <script>
@@ -193,7 +200,7 @@ for (let i = 0; i < 100; i++) {
         size: Math.random() * 3 + 1,
         speedX: (Math.random() - 0.5) * 1.5,
         speedY: (Math.random() - 0.5) * 1.5,
-        color: `rgba(239,68,68,0.8)` // vermelho
+        color: `rgba(239,68,68,0.8)`
     });
 }
 
@@ -222,14 +229,4 @@ function animate() {
         if (p.x < 0 || p.x > w) p.speedX *= -1;
         if (p.y < 0 || p.y > h) p.speedY *= -1;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-    });
-    connectParticles();
-    requestAnimationFrame(animate);
-}
-animate();
-
-// ====== Interação com Mouse e Toque ======
-function createBurst(x, y                        
+        ctx.arc(p.x, p.y, p.size, 0,
