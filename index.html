@@ -117,6 +117,13 @@ p {
     animation: gradientShift 3s ease infinite, btnHoverPulse 0.5s ease infinite alternate;
 }
 
+/* Botão desativado */
+.btn.disabled {
+    background: #9f1d1d;
+    cursor: not-allowed;
+    box-shadow: 0 0 5px #9f1d1d;
+}
+
 /* ====== Animações ====== */
 @keyframes iconPulse {
     0% {transform: scale(1);}
@@ -162,7 +169,7 @@ p {
 <canvas id="particles"></canvas>
 
 <div class="container">
-    <div class="logo"></div> <!-- Logo animado -->
+    <div class="logo"></div>
     <div class="creator">Meu criador: Miguel Durso</div>
     <h1>Bem-vindo!</h1>
     <p>Aqui você tem acesso aos hacks mais fáceis.</p>
@@ -172,12 +179,10 @@ p {
         <a class="btn" href="https://saladofuturo.educacao.sp.gov.br/" target="_blank"><i class="fas fa-school"></i> Sala do Futuro</a>
         <a class="btn" href="https://taskitos.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-tasks"></i> Taskitos</a>
         <a class="btn" href="https://matific.cupiditys.lol/dashboard?cmsphacks.xyz" target="_blank"><i class="fas fa-calculator"></i> Matific</a>
-        <a class="btn" href="https://redacao.moonhacks.xyz/?cmsphacks.xyz" target="_blank"><i class="fas fa-pencil-alt"></i> Redação</a>
+        <a class="btn disabled"><i class="fas fa-pencil-alt"></i> "Site em manutenção, por favor volte mais tarde"</a>
         <a class="btn" href="https://speakify.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-comment-dots"></i> Speak SP</a>
     </div>
 </div>
-
-<audio id="click-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-casino-notification-211.wav"></audio>
 
 <script>
 // ====== Partículas Futuristas Vermelhas ======
@@ -214,19 +219,4 @@ function connectParticles() {
                 ctx.beginPath();
                 ctx.strokeStyle = `rgba(239,68,68,${1 - distance/120})`;
                 ctx.moveTo(particles[a].x, particles[a].y);
-                ctx.lineTo(particles[b].x, particles[b].y);
-                ctx.stroke();
-            }
-        }
-    }
-}
-
-function animate() {
-    ctx.clearRect(0, 0, w, h);
-    particles.forEach(p => {
-        p.x += p.speedX;
-        p.y += p.speedY;
-        if (p.x < 0 || p.x > w) p.speedX *= -1;
-        if (p.y < 0 || p.y > h) p.speedY *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0,
+                ctx.lineTo(particles[b
