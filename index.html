@@ -1,83 +1,145 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Site Futurista</title>
+<title>Site Futurista com Assistente Tutor</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
+/* ===== Reset e corpo ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     background: #0f172a;
     color: #fff;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    overflow-x: hidden;
     text-align: center;
 }
+canvas { position: fixed; top:0; left:0; z-index:0; }
 
-canvas { position: absolute; top: 0; left: 0; z-index: 0; }
-
-/* ===== Container ===== */
+/* ===== Container principal ===== */
 .container {
     position: relative;
-    z-index: 1;
+    z-index:1;
     background: rgba(30,58,138,0.85);
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(239,68,68,0.5);
-    max-width: 650px;
-    width: 90%;
+    padding:25px;
+    border-radius:20px;
+    max-width:700px;
+    margin:20px auto;
+    box-shadow:0 0 25px rgba(239,68,68,0.5);
 }
 
 /* ===== Textos ===== */
-.subtitle { font-size: 1em; margin-bottom: 10px; color: #f87171; text-shadow: 0 0 8px #ef4444; }
-h1 { margin-bottom: 15px; font-size: 2.5em; text-shadow: 0 0 10px #ef4444, 0 0 20px #dc2626; }
-p { margin-bottom: 25px; font-size: 1.2em; color: #fca5a5; }
-.maintenance-msg { margin-top: 20px; font-size: 1em; color: #f87171; font-style: italic; text-shadow: 0 0 5px #ef4444; }
+.subtitle { font-size:1em; margin-bottom:10px; color:#f87171; text-shadow:0 0 8px #ef4444; }
+h1 { margin-bottom:15px; font-size:2.2em; text-shadow:0 0 10px #ef4444,0 0 20px #dc2626; }
+p { margin-bottom:20px; font-size:1.1em; color:#fca5a5; }
 
 /* ===== Botões ===== */
-.buttons-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-
+.buttons-container {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    padding: 15px;
+    background: rgba(30,58,138,0.85);
+    border-radius: 20px;
+    box-shadow:0 0 20px rgba(239,68,68,0.5);
+    margin-bottom: 25px;
+}
 .btn {
-    background: linear-gradient(135deg, #ef4444, #b91c1c, #f87171);
-    color: white;
-    padding: 12px 22px;
-    font-size: 15px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 0 15px rgba(239,68,68,0.6);
-    min-width: 120px;
-    justify-content: center;
-    background-size: 300% 300%;
+    background: linear-gradient(135deg,#ef4444,#b91c1c,#f87171);
+    color:white;
+    padding:10px 18px;
+    font-size:14px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow:0 0 10px rgba(239,68,68,0.6);
+    min-width:110px;
+    justify-content:center;
+    background-size:300% 300%;
     animation: gradientShift 4s ease infinite;
 }
+.btn i { font-size:16px; transition: transform 0.3s ease; }
+.btn.disabled { background: rgba(239,68,68,0.3); box-shadow:none; cursor:not-allowed; pointer-events:none; }
+.btn:hover, .btn:active { transform: scale(1.05); box-shadow:0 0 15px rgba(239,68,68,0.9); }
+.btn:hover i, .btn:active i { transform: rotate(20deg) scale(1.1); }
 
-.btn i { font-size: 18px; transition: transform 0.3s ease; }
-.btn.disabled { background: rgba(239,68,68,0.3); box-shadow: none; cursor: not-allowed; pointer-events: none; }
-.btn:hover, .btn:active { transform: scale(1.1); }
-.btn:hover i, .btn:active i { transform: rotate(20deg) scale(1.2); }
-
-/* ===== Efeitos ===== */
 @keyframes gradientShift {
     0% {background-position:0% 50%;}
     50% {background-position:100% 50%;}
     100% {background-position:0% 50%;}
 }
 
+/* ===== Assistente de Estudo Tutor ===== */
+.study-container {
+    background: rgba(30,58,138,0.95);
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(239,68,68,0.5);
+    max-height:500px;
+    overflow-y:auto;
+    margin-bottom: 25px;
+}
+input, button { padding:10px; border-radius:10px; border:none; font-size:14px; }
+input { flex:1; }
+
+.add-btn { cursor:pointer; background: linear-gradient(135deg,#ef4444,#b91c1c,#f87171); color:white; margin-left:5px; transition: transform 0.3s ease; }
+.add-btn:hover { transform: scale(1.05); }
+
+.task-list { margin-top:15px; text-align:left; }
+.task {
+    background: rgba(239,68,68,0.2);
+    margin-bottom:10px;
+    padding:10px;
+    border-radius:10px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.task .question-btn {
+    background:none;
+    color:white;
+    cursor:pointer;
+    margin-left:5px;
+}
+
+#question-input { width: 70%; margin-top:10px; }
+#answer-output { margin-top:10px; text-align:left; background: rgba(0,0,0,0.3); padding:10px; border-radius:10px; min-height:40px; }
+
+/* ===== Botão flutuante ===== */
+#toggle-assistant {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index:100;
+    padding:12px 18px;
+    font-size:14px;
+    border:none;
+    border-radius:50px;
+    background: linear-gradient(135deg,#ef4444,#b91c1c,#f87171);
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 12px rgba(239,68,68,0.7);
+    transition: transform 0.3s ease;
+}
+#toggle-assistant:hover { transform: scale(1.05); }
+
 /* ===== Responsividade ===== */
-@media(max-width:768px){ h1 { font-size: 2em; } p { font-size: 1.1em; } }
-@media(max-width:480px){ .container { padding: 30px 20px; } h1 { font-size: 1.8em; } p { font-size: 1em; } .btn { flex:1 1 100%; } }
+@media(max-width:768px){
+    h1 { font-size:1.8em; } p { font-size:1em; }
+}
+@media(max-width:480px){
+    .container { padding:15px; }
+    h1 { font-size:1.5em; } p { font-size:0.9em; }
+    .buttons-container .btn { flex:1 1 100%; min-width:unset; }
+    #question-input { width: 65%; }
+}
 </style>
 </head>
 <body>
@@ -87,56 +149,42 @@ p { margin-bottom: 25px; font-size: 1.2em; color: #fca5a5; }
     <div class="subtitle">Meu criador: Miguel Durso</div>
     <h1>Bem-vindo</h1>
     <p>Aqui você tem acesso aos hacks mais fáceis</p>
+
+    <!-- Painel de botões -->
     <div class="buttons-container">
-        <a class="btn" href="https://leiasp.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-book"></i> LEIASP</a>
-        <a class="btn" href="https://apostilas-cmsp.vercel.app/?cmsphacks.xyz" target="_blank"><i class="fas fa-file-alt"></i> Apostila</a>
-        <a class="btn" href="https://saladofuturo.educacao.sp.gov.br/" target="_blank"><i class="fas fa-school"></i> Sala do Futuro</a>
-        <a class="btn" href="https://taskitos.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-tasks"></i> Taskitos</a>
-        <a class="btn" href="https://matific.cupiditys.lol/dashboard?cmsphacks.xyz" target="_blank"><i class="fas fa-calculator"></i> Matific</a>
+        <a class="btn" href="#" target="_blank"><i class="fas fa-book"></i> LEIASP</a>
+        <a class="btn" href="#" target="_blank"><i class="fas fa-file-alt"></i> Apostila</a>
+        <a class="btn" href="#" target="_blank"><i class="fas fa-school"></i> Sala do Futuro</a>
+        <a class="btn" href="#" target="_blank"><i class="fas fa-tasks"></i> Taskitos</a>
+        <a class="btn" href="#" target="_blank"><i class="fas fa-calculator"></i> Matific</a>
         <a class="btn disabled" href="#"><i class="fas fa-pencil-alt"></i> Redação</a>
-        <a class="btn" href="https://speakify.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-comment-dots"></i> Speak SP</a>
+        <a class="btn" href="#" target="_blank"><i class="fas fa-comment-dots"></i> Speak SP</a>
     </div>
-    <div class="maintenance-msg">Opção Redação está em manutenção. Estamos melhorando para sua melhor experiência.</div>
+
+    <!-- Assistente de Estudo Tutor -->
+    <div class="study-container">
+        <h2>Assistente de Estudo</h2>
+        <div style="display:flex; gap:5px; margin-bottom:10px;">
+            <input type="text" id="task-title" placeholder="Nome da tarefa">
+            <input type="date" id="task-date">
+            <button class="add-btn" id="add-task"><i class="fas fa-plus"></i> Adicionar</button>
+        </div>
+        <div class="task-list" id="task-list"></div>
+
+        <div style="margin-top:10px;">
+            <input type="text" id="question-input" placeholder="Digite sua dúvida aqui...">
+            <button class="add-btn" id="ask-btn"><i class="fas fa-question"></i> Perguntar</button>
+            <div id="answer-output"></div>
+        </div>
+    </div>
 </div>
 
+<button id="toggle-assistant"><i class="fas fa-robot"></i> Fechar Assistente</button>
+
 <script>
-// ===== Partículas Vermelhas =====
+// ===== Partículas leves =====
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
-let w, h;
-function resizeCanvas() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-let particles = [];
-for(let i=0;i<60;i++){ // menos partículas para mais leveza
-    particles.push({ x: Math.random()*w, y: Math.random()*h, size: Math.random()*2+1, speedX:(Math.random()-0.5)*0.8, speedY:(Math.random()-0.5)*0.8 });
-}
-
-function connectParticles(){
-    for(let a=0;a<particles.length;a++){
-        for(let b=a+1;b<particles.length;b++){
-            let dx=particles[a].x-particles[b].x, dy=particles[a].y-particles[b].y, dist=Math.sqrt(dx*dx+dy*dy);
-            if(dist<100){ ctx.beginPath(); ctx.strokeStyle=`rgba(239,68,68,${1-dist/100})`; ctx.moveTo(particles[a].x,particles[a].y); ctx.lineTo(particles[b].x,particles[b].y); ctx.stroke(); }
-        }
-    }
-}
-
-function animate(){
-    ctx.clearRect(0,0,w,h);
-    particles.forEach(p=>{
-        p.x+=p.speedX; p.y+=p.speedY;
-        if(p.x<0||p.x>w)p.speedX*=-1;
-        if(p.y<0||p.y>h)p.speedY*=-1;
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-        ctx.fillStyle='rgba(239,68,68,0.7)';
-        ctx.fill();
-    });
-    connectParticles();
-    requestAnimationFrame(animate);
-}
-animate();
-</script>
-</body>
-</html>
+let w,h;
+function resizeCanvas(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; }
+window.addEventListener('resize',resize            
