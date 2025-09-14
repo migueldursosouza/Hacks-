@@ -1,67 +1,281 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site em Manutenção</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: #0f172a;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Futurista Completo</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Orbitron', sans-serif; background:#0f172a; color:#fff; text-align:center; overflow-x:hidden; }
 
-    .lock-content {
-      background: rgba(30,58,138,0.85);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(239,68,68,0.6);
-      max-width: 400px;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
+canvas { position: fixed; top:0; left:0; }
 
-    .lock-icon {
-      font-size: 60px;
-      color: #f87171;
-      margin-bottom: 20px;
-      text-shadow: 0 0 10px #ef4444, 0 0 20px #dc2626;
-    }
+.container { position: relative; z-index:1; background: rgba(30,58,138,0.85); padding:25px; border-radius:20px; max-width:800px; margin:40px auto; box-shadow:0 0 25px rgba(239,68,68,0.5); }
+.subtitle { font-size:1.1em; margin-bottom:10px; color:#f87171; text-shadow:0 0 8px #ef4444; display:flex; align-items:center; justify-content:center; gap:8px; }
+.subtitle i { animation: spin 4s linear infinite, neonGlow 1.5s ease-in-out infinite alternate; color:#f87171; }
+h1 { margin-bottom:15px; font-size:2.2em; text-shadow:0 0 10px #ef4444,0 0 20px #dc2626; }
+p { margin-bottom:20px; font-size:1.1em; color:#fca5a5; }
 
-    h1 {
-      font-size: 2em;
-      margin-bottom: 10px;
-      text-shadow: 0 0 8px #ef4444, 0 0 16px #dc2626;
-    }
+.buttons-container { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; padding:15px; background: rgba(30,58,138,0.85); border-radius:20px; box-shadow:0 0 20px rgba(239,68,68,0.5); }
+.btn { background: linear-gradient(135deg,#ef4444,#b91c1c,#f87171); color:white; padding:10px 18px; font-size:14px; border:none; border-radius:12px; cursor:pointer; display:flex; align-items:center; gap:6px; transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; box-shadow:0 0 10px rgba(239,68,68,0.6); min-width:110px; justify-content:center; background-size:300% 300%; animation: gradientShift 4s ease infinite; text-decoration:none; position: relative; overflow: hidden; }
+.btn::before { content:""; position: absolute; top:0; left:-75%; width:50%; height:100%; background: rgba(255,255,255,0.25); transform: skewX(-25deg); transition: left 0.5s; }
+.btn:hover::before { left:125%; }
+.btn:hover, .btn:active { transform: scale(1.08); box-shadow:0 0 20px rgba(239,68,68,0.9), 0 0 40px rgba(255,255,255,0.2); filter: brightness(1.2); }
+.btn:hover i, .btn:active i { transform: rotate(20deg) scale(1.2); }
+.btn.disabled { background: rgba(239,68,68,0.3); box-shadow:none; cursor:not-allowed; pointer-events:none; }
 
-    p {
-      color: #fca5a5;
-      font-size: 1.1em;
-    }
+@keyframes gradientShift { 0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
+@keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
+@keyframes neonGlow { 0% { text-shadow: 0 0 5px #ef4444, 0 0 10px #dc2626, 0 0 15px #f87171; } 50% { text-shadow: 0 0 12px #f87171, 0 0 25px #ef4444, 0 0 35px #dc2626; } 100% { text-shadow: 0 0 5px #ef4444, 0 0 10px #dc2626, 0 0 15px #f87171; } }
 
-    @keyframes glow {
-      from {
-        box-shadow: 0 0 15px rgba(239,68,68,0.6);
-      }
-      to {
-        box-shadow: 0 0 30px rgba(239,68,68,1);
-      }
-    }
-  </style>
+@media(max-width:768px){ h1{font-size:1.8em;} p{font-size:1em;} .container{padding:20px; margin:20px auto;} .subtitle{font-size:1em;} }
+@media(max-width:480px){ h1{font-size:1.5em;} p{font-size:0.9em;} .container{padding:15px; margin:15px auto;} .buttons-container .btn{flex:1 1 100%; min-width:unset;} }
+
+.aviso { margin-top: 20px; font-size: 0.95em; color: #f87171; background: rgba(239,68,68,0.15); padding: 10px 15px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(239,68,68,0.4); animation: avisoGlow 1.8s infinite alternate; }
+.aviso i { margin-right: 6px; }
+@keyframes avisoGlow { from { text-shadow: 0 0 5px #ef4444, 0 0 10px #dc2626; box-shadow: 0 0 8px rgba(239,68,68,0.6); } to { text-shadow: 0 0 12px #fca5a5, 0 0 25px #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.9); } }
+
+.calc-container { margin-top: 25px; padding: 20px; background: rgba(15,23,42,0.8); border-radius: 15px; box-shadow: 0 0 15px rgba(239,68,68,0.5); }
+.calc-container h2 { font-size: 1.4em; margin-bottom: 15px; color: #f87171; text-shadow: 0 0 10px #ef4444; }
+.calc input, .calc textarea { width: 80px; padding: 6px; border-radius: 8px; border: none; margin: 5px; text-align: center;}
+.calc textarea { width: 90%; resize: vertical; }
+.calc button { padding: 6px 12px; margin: 5px; border: none; border-radius: 8px; cursor: pointer; background: #ef4444; color: white; transition: 0.3s;}
+.calc button:hover { background: #dc2626; }
+.result { margin-top: 10px; font-weight: bold; color: #fca5a5; text-align: left; }
+
+#redBallTrail { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+#redOverlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,0,0,0.15); pointer-events:none; z-index:9998; }
+</style>
 </head>
 <body>
-  <div class="lock-content">
-    <div class="lock-icon"><i class="fas fa-lock"></i></div>
-    <h1>Site em Manutenção</h1>
-    <p>Voltaremos em breve...</p>
-  </div>
+<canvas id="particles"></canvas>
+<canvas id="redBallTrail"></canvas>
+<div id="redOverlay"></div>
+
+<div class="container">
+    <div class="subtitle"><i class="fas fa-cog"></i> Hacks: Sala do Futuro</div>
+    <h1>Bem-vindo</h1>
+    <p>Aqui estão os hacks da Sala do Futuro</p>
+
+    <div class="buttons-container">
+        <a class="btn" href="https://leiasp.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-book"></i> LEIASP</a>
+        <a class="btn" href="https://apostilas-cmsp.vercel.app/?cmsphacks.xyz" target="_blank"><i class="fas fa-file-alt"></i> Apostila</a>
+        <a class="btn" href="https://saladofuturo.educacao.sp.gov.br/" target="_blank"><i class="fas fa-school"></i> Sala do Futuro</a>
+        <a class="btn" href="https://taskitos.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-tasks"></i> Taskitos</a>
+        <a class="btn" href="https://matific.cupiditys.lol/dashboard?cmsphacks.xyz" target="_blank"><i class="fas fa-calculator"></i> Matific</a>
+        <a class="btn disabled" href="#"><i class="fas fa-pencil-alt"></i> Redação</a>
+        <a class="btn" href="https://speakify.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-comment-dots"></i> Speak SP</a>
+    </div>
+
+    <div class="aviso"><i class="fas fa-tools"></i> A opção <strong>Redação</strong> está em manutenção no momento.</div>
+
+    <!-- Calculadoras e Dicionário -->
+    <div class="calc-container">
+        <h2><i class="fas fa-calculator"></i> Calculadora Normal</h2>
+        <div class="calc">
+            <input type="number" id="num1" placeholder="Número 1">
+            <input type="number" id="num2" placeholder="Número 2"><br>
+            <button onclick="calcNormal('+')">+</button>
+            <button onclick="calcNormal('-')">-</button>
+            <button onclick="calcNormal('*')">×</button>
+            <button onclick="calcNormal('/')">÷</button>
+            <div class="result" id="resultNormal"></div>
+        </div>
+    </div>
+
+    <div class="calc-container">
+        <h2><i class="fas fa-divide"></i> Calculadora de Frações</h2>
+        <div class="calc">
+            <input type="number" id="f1n" placeholder="Num 1">
+            <input type="number" id="f1d" placeholder="Den 1"><br>
+            <input type="number" id="f2n" placeholder="Num 2">
+            <input type="number" id="f2d" placeholder="Den 2"><br>
+            <button onclick="calcFrac('+')">+</button>
+            <button onclick="calcFrac('-')">-</button>
+            <button onclick="calcFrac('*')">×</button>
+            <button onclick="calcFrac('/')">÷</button>
+            <div class="result" id="resultFrac"></div>
+        </div>
+    </div>
+
+    <div class="calc-container">
+        <h2><i class="fas fa-calculator"></i> Calculadora Avançada</h2>
+        <div class="calc">
+            <input type="text" id="advInput" placeholder="Ex: 2+3*4">
+            <button onclick="calcAdvanced()">Calcular</button>
+            <button onclick="clearAdv()">Limpar</button>
+            <div class="result" id="resultAdv"></div>
+        </div>
+    </div>
+
+    <div class="calc-container">
+        <h2><i class="fas fa-book-open"></i> Dicionário</h2>
+        <div class="calc">
+            <input type="text" id="dictInput" placeholder="Palavra">
+            <button onclick="searchDict()">Buscar</button>
+            <div class="result" id="dictResult"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== Partículas de fundo =====
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w,h;
+function resizeCanvas(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; }
+window.addEventListener('resize',resizeCanvas);
+resizeCanvas();
+let numParticles = window.innerWidth < 480 ? 20 : window.innerWidth < 768 ? 30 : 40;
+let particles=[];
+for(let i=0;i<numParticles;i++){
+    let size = Math.random()*(window.innerWidth < 480 ? 1.5 : 2)+1;
+    let speed = (Math.random()-0.5)*0.6;
+    if(window.innerWidth < 480) speed *= 0.8;
+    particles.push({x:Math.random()*w,y:Math.random()*h,size:size,speedX:speed,speedY:speed});
+}
+function connectParticles(){ 
+    for(let a=0;a<particles.length;a++){ 
+        for(let b=a+1;b<particles.length;b++){ 
+            let dx=particles[a].x-particles[b].x, dy=particles[a].y-particles[b].y, dist=Math.sqrt(dx*dx+dy*dy); 
+            if(dist < (window.innerWidth < 480 ? 80 : 120)){ 
+                ctx.beginPath(); 
+                ctx.strokeStyle=`rgba(239,68,68,${1-dist/(window.innerWidth < 480 ? 80 : 120)})`; 
+                ctx.moveTo(particles[a].x,particles[a].y); 
+                ctx.lineTo(particles[b].x,particles[b].y); 
+                ctx.stroke(); 
+            } 
+        } 
+    } 
+}
+function animate(){ 
+    ctx.clearRect(0,0,w,h); 
+    particles.forEach(p=>{ 
+        p.x+=p.speedX; 
+        p.y+=p.speedY; 
+        if(p.x<0||p.x>w)p.speedX*=-1; 
+        if(p.y<0||p.y>h)p.speedY*=-1; 
+        ctx.beginPath(); 
+        ctx.arc(p.x,p.y,p.size,0,Math.PI*2); 
+        ctx.fillStyle='rgba(239,68,68,0.7)'; 
+        ctx.fill(); 
+    }); 
+    connectParticles(); 
+    requestAnimationFrame(animate); 
+}
+animate();
+
+// ===== Calculadora Normal =====
+function calcNormal(op){
+    const n1 = parseFloat(document.getElementById('num1').value);
+    const n2 = parseFloat(document.getElementById('num2').value);
+    if(isNaN(n1) || isNaN(n2)){ document.getElementById('resultNormal').innerText="Digite números válidos!"; return; }
+    let res;
+    switch(op){
+        case '+': res=n1+n2; break;
+        case '-': res=n1-n2; break;
+        case '*': res=n1*n2; break;
+        case '/': res=n2!==0?n1/n2:"Erro: divisão por 0"; break;
+    }
+    document.getElementById('resultNormal').innerText="Resultado: "+res;
+}
+
+// ===== Calculadora de Frações =====
+function calcFrac(op){
+    const n1=parseInt(document.getElementById('f1n').value);
+    const d1=parseInt(document.getElementById('f1d').value);
+    const n2=parseInt(document.getElementById('f2n').value);
+    const d2=parseInt(document.getElementById('f2d').value);
+    if([n1,d1,n2,d2].some(isNaN)||d1===0||d2===0){ document.getElementById('resultFrac').innerText="Valores inválidos!"; return; }
+    let resNum,resDen;
+    switch(op){
+        case '+': resNum=n1*d2+n2*d1; resDen=d1*d2; break;
+        case '-': resNum=n1*d2-n2*d1; resDen=d1*d2; break;
+        case '*': resNum=n1*n2; resDen=d1*d2; break;
+        case '/': resNum=n1*d2; resDen=d1*n2; break;
+    }
+    function gcd(a,b){ return b===0?a:gcd(b,a%b); }
+    const g=gcd(Math.abs(resNum),Math.abs(resDen));
+    resNum/=g; resDen/=g;
+    document.getElementById('resultFrac').innerText="Resultado: "+resNum+"/"+resDen;
+}
+
+// ===== Calculadora Avançada =====
+function calcAdvanced(){
+    const input = document.getElementById('advInput').value;
+    try{
+        const res = eval(input);
+        document.getElementById('resultAdv').innerText="Resultado: "+res;
+    }catch(e){ document.getElementById('resultAdv').innerText="Expressão inválida!"; }
+}
+function clearAdv(){ document.getElementById('advInput').value=''; document.getElementById('resultAdv').innerText=''; }
+
+// ===== Dicionário Simples =====
+const dictionary={ "matemática":"Estudo de números, formas e padrões.","física":"Ciência que estuda a natureza e as leis do universo.","química":"Ciência que estuda a composição e propriedades da matéria.","história":"Estudo do passado humano.","português":"Língua oficial do Brasil." };
+function searchDict(){ const word=document.getElementById('dictInput').value.trim().toLowerCase(); if(word in dictionary) document.getElementById('dictResult').innerText=dictionary[word]; else document.getElementById('dictResult').innerText="Palavra não encontrada no dicionário."; }
+
+// ===== Bolinha vermelha neon com rastro preto (ativa apenas no desktop) =====
+const trailCanvas = document.getElementById('redBallTrail');
+const tctx = trailCanvas.getContext('2d');
+
+function resizeTrailCanvas(){
+    trailCanvas.width = window.innerWidth;
+    trailCanvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeTrailCanvas);
+resizeTrailCanvas();
+
+let targetX = window.innerWidth/2, targetY = window.innerHeight/2;
+let currentX = targetX, currentY = targetY;
+const trail = [];
+
+function updateTarget(e){
+    if(e.type.startsWith('touch')){
+        const touch = e.touches[0];
+        if(touch){ targetX = touch.clientX; targetY = touch.clientY; }
+    } else { targetX = e.clientX; targetY = e.clientY; }
+}
+window.addEventListener('mousemove', updateTarget);
+window.addEventListener('touchstart', updateTarget, {passive:true});
+window.addEventListener('touchmove', updateTarget, {passive:true});
+
+function animateTrail(){
+    // Desativa bolinha no mobile (<768px)
+    if(window.innerWidth < 768) return;
+
+    currentX += (targetX - currentX) * 0.2;
+    currentY += (targetY - currentY) * 0.2;
+
+    trail.push({x: currentX, y: currentY});
+    if(trail.length > 50) trail.shift();
+
+    tctx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
+
+    // Rastro preto
+    for(let i=0;i<trail.length;i++){
+        const pos = trail[i];
+        const alpha = i / trail.length;
+        tctx.beginPath();
+        tctx.arc(pos.x,pos.y,15*(alpha*0.8+0.2),0,Math.PI*2);
+        tctx.fillStyle = `rgba(0,0,0,${alpha})`;
+        tctx.shadowBlur = 30;
+        tctx.shadowColor = "rgba(255,76,76,1)";
+        tctx.fill();
+    }
+
+    // Bolinha vermelha neon
+    tctx.beginPath();
+    tctx.arc(currentX, currentY, 15, 0, Math.PI*2);
+    tctx.fillStyle = 'rgba(255,76,76,1)';
+    tctx.shadowBlur = 30;
+    tctx.shadowColor = "rgba(255,76,76,1)";
+    tctx.fill();
+
+    requestAnimationFrame(animateTrail);
+}
+animateTrail();
+</script>
 </body>
 </html>
