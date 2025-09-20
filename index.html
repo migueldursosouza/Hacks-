@@ -33,10 +33,6 @@ p { margin-bottom:20px; font-size:1.1em; color:#fca5a5; }
 @media(max-width:768px){ h1{font-size:1.8em;} p{font-size:1em;} .container{padding:20px; margin:20px auto;} .subtitle{font-size:1em;} }
 @media(max-width:480px){ h1{font-size:1.5em;} p{font-size:0.9em;} .container{padding:15px; margin:15px auto;} .buttons-container .btn{flex:1 1 100%; min-width:unset;} }
 
-.aviso { margin-top: 20px; font-size: 0.95em; color: #f87171; background: rgba(239,68,68,0.15); padding: 10px 15px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(239,68,68,0.4); animation: avisoGlow 1.8s infinite alternate; }
-.aviso i { margin-right: 6px; }
-@keyframes avisoGlow { from { text-shadow: 0 0 5px #ef4444, 0 0 10px #dc2626; box-shadow: 0 0 8px rgba(239,68,68,0.6); } to { text-shadow: 0 0 12px #fca5a5, 0 0 25px #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.9); } }
-
 .calc-container { margin-top: 25px; padding: 20px; background: rgba(15,23,42,0.8); border-radius: 15px; box-shadow: 0 0 15px rgba(239,68,68,0.5); }
 .calc-container h2 { font-size: 1.4em; margin-bottom: 15px; color: #f87171; text-shadow: 0 0 10px #ef4444; }
 .calc input, .calc textarea { width: 80px; padding: 6px; border-radius: 8px; border: none; margin: 5px; text-align: center;}
@@ -65,11 +61,9 @@ p { margin-bottom:20px; font-size:1.1em; color:#fca5a5; }
         <a class="btn" href="https://saladofuturo.educacao.sp.gov.br/" target="_blank"><i class="fas fa-school"></i> Sala do Futuro</a>
         <a class="btn" href="https://taskitos.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-tasks"></i> Taskitos</a>
         <a class="btn" href="https://matific.cupiditys.lol/dashboard?cmsphacks.xyz" target="_blank"><i class="fas fa-calculator"></i> Matific</a>
-        <a class="btn disabled" href="#"><i class="fas fa-pencil-alt"></i> Redação</a>
+        <a class="btn" href="https://redacao.cupiditys.lol/" target="_blank"><i class="fas fa-pencil-alt"></i> Redação</a>
         <a class="btn" href="https://speakify.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-comment-dots"></i> Speak SP</a>
     </div>
-
-    <div class="aviso"><i class="fas fa-tools"></i> A opção <strong>Redação</strong> está em manutenção no momento.</div>
 
     <!-- Calculadoras e Dicionário -->
     <div class="calc-container">
@@ -165,7 +159,6 @@ function animate(){
     connectParticles(); 
     requestAnimationFrame(animate); 
 }
-animate();
 
 // ===== Calculadora Normal =====
 function calcNormal(op){
@@ -219,53 +212,74 @@ function searchDict(){ const word=document.getElementById('dictInput').value.tri
 // ===== Bolinha vermelha neon com rastro =====
 const trailCanvas = document.getElementById('redBallTrail');
 const tctx = trailCanvas.getContext('2d');
-function resizeTrailCanvas(){ trailCanvas.width = window.innerWidth; trailCanvas.height = window.innerHeight; }
+
+function resizeTrailCanvas(){
+    trailCanvas.width = window.innerWidth;
+    trailCanvas.height = window.innerHeight;
+}
 window.addEventListener('resize', resizeTrailCanvas);
 resizeTrailCanvas();
+
 let targetX = window.innerWidth/2, targetY = window.innerHeight/2;
 let currentX = targetX, currentY = targetY;
 const trail = [];
-function updateTarget(e){ if(e.type.startsWith('touch')){ const touch = e.touches[0]; if(touch){ targetX = touch.clientX; targetY = touch.clientY; } } else { targetX = e.clientX; targetY = e.clientY; } }
+
+function updateTarget(e){
+    if(e.type.startsWith('touch')){
+        const touch = e.touches[0];
+        if(touch){
+            targetX = touch.clientX;
+            targetY = touch.clientY;
+        }
+    } else {
+        targetX = e.clientX;
+        targetY = e.clientY;
+    }
+}
 window.addEventListener('mousemove', updateTarget);
 window.addEventListener('touchstart', updateTarget, {passive:true});
 window.addEventListener('touchmove', updateTarget, {passive:true});
+
 function animateTrail(){
-    if(window.innerWidth < 768) return;
-    currentX += (targetX - currentX) * 0.2;
-    currentY += (targetY - currentY) * 0.2;
+    currentX += (targetX - currentX) * 0.25;
+    currentY += (targetY - currentY) * 0.25;
+
     trail.push({x: currentX, y: currentY});
-    if(trail.length > 50) trail.shift();
+    if(trail.length > 60) trail.shift();
+
     tctx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
+
     for(let i=0;i<trail.length;i++){
         const pos = trail[i];
         const alpha = i / trail.length;
         tctx.beginPath();
-        tctx.arc(pos.x,pos.y,15*(alpha*0.8+0.2),0,Math.PI*2);
-        tctx.fillStyle = `rgba(0,0,0,${alpha})`;
-        tctx.shadowBlur = 30;
-        tctx.shadowColor = "rgba(255,76,76,1)";
+        tctx.arc(pos.x,pos.y,12*(alpha*0.6+0.4),0,Math.PI*2);
+        tctx.fillStyle = `rgba(255,0,0,${alpha*0.4})`;
         tctx.fill();
     }
+
     tctx.beginPath();
-    tctx.arc(currentX, currentY, 15, 0, Math.PI*2);
-    tctx.fillStyle = 'rgba(255,76,76,1)';
-    tctx.shadowBlur = 30;
-    tctx.shadowColor = "rgba(255,76,76,1)";
+    tctx.arc(currentX,currentY,14,0,Math.PI*2);
+    tctx.fillStyle='rgba(255,0,0,1)';
+    tctx.shadowBlur=30;
+    tctx.shadowColor='#ff0000';
     tctx.fill();
+
     requestAnimationFrame(animateTrail);
 }
 animateTrail();
 
 // ===== Botão Apostila com senha =====
-document.getElementById("apostilaBtn").addEventListener("click", function(e){
-    e.preventDefault();
-    const code = prompt("Digite o código para acessar a Apostila:");
-    if(code === "Migueladm"){
-        window.location.href = "https://apostilas-cmsp.vercel.app/?cmsphacks.xyz";
-    } else if(code !== null){
-        alert("Código incorreto! Tente novamente.");
+document.getElementById('apostilaBtn').addEventListener('click', function(){
+    const senha = prompt("Digite a senha para acessar a Apostila:");
+    if(senha === "durso16"){
+        window.open("https://apostila.cupiditys.lol/?cmsphacks.xyz","_blank");
+    } else {
+        alert("Senha incorreta!");
     }
 });
+
+animate();
 </script>
 </body>
 </html>
