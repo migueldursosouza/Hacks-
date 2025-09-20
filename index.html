@@ -41,13 +41,11 @@ p { margin-bottom:20px; font-size:1.1em; color:#fca5a5; }
 .calc button:hover { background: #dc2626; }
 .result { margin-top: 10px; font-weight: bold; color: #fca5a5; text-align: left; }
 
-#redBallTrail { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
 #redOverlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(255,0,0,0.15); pointer-events:none; z-index:9998; }
 </style>
 </head>
 <body>
 <canvas id="particles"></canvas>
-<canvas id="redBallTrail"></canvas>
 <div id="redOverlay"></div>
 
 <div class="container">
@@ -209,71 +207,11 @@ function clearAdv(){ document.getElementById('advInput').value=''; document.getE
 const dictionary={ "matemática":"Estudo de números, formas e padrões.","física":"Ciência que estuda a natureza e as leis do universo.","química":"Ciência que estuda a composição e propriedades da matéria.","história":"Estudo do passado humano.","português":"Língua oficial do Brasil." };
 function searchDict(){ const word=document.getElementById('dictInput').value.trim().toLowerCase(); if(word in dictionary) document.getElementById('dictResult').innerText=dictionary[word]; else document.getElementById('dictResult').innerText="Palavra não encontrada no dicionário."; }
 
-// ===== Bolinha vermelha neon com rastro =====
-const trailCanvas = document.getElementById('redBallTrail');
-const tctx = trailCanvas.getContext('2d');
-
-function resizeTrailCanvas(){
-    trailCanvas.width = window.innerWidth;
-    trailCanvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeTrailCanvas);
-resizeTrailCanvas();
-
-let targetX = window.innerWidth/2, targetY = window.innerHeight/2;
-let currentX = targetX, currentY = targetY;
-const trail = [];
-
-function updateTarget(e){
-    if(e.type.startsWith('touch')){
-        const touch = e.touches[0];
-        if(touch){
-            targetX = touch.clientX;
-            targetY = touch.clientY;
-        }
-    } else {
-        targetX = e.clientX;
-        targetY = e.clientY;
-    }
-}
-window.addEventListener('mousemove', updateTarget);
-window.addEventListener('touchstart', updateTarget, {passive:true});
-window.addEventListener('touchmove', updateTarget, {passive:true});
-
-function animateTrail(){
-    currentX += (targetX - currentX) * 0.25;
-    currentY += (targetY - currentY) * 0.25;
-
-    trail.push({x: currentX, y: currentY});
-    if(trail.length > 60) trail.shift();
-
-    tctx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
-
-    for(let i=0;i<trail.length;i++){
-        const pos = trail[i];
-        const alpha = i / trail.length;
-        tctx.beginPath();
-        tctx.arc(pos.x,pos.y,12*(alpha*0.6+0.4),0,Math.PI*2);
-        tctx.fillStyle = `rgba(255,0,0,${alpha*0.4})`;
-        tctx.fill();
-    }
-
-    tctx.beginPath();
-    tctx.arc(currentX,currentY,14,0,Math.PI*2);
-    tctx.fillStyle='rgba(255,0,0,1)';
-    tctx.shadowBlur=30;
-    tctx.shadowColor='#ff0000';
-    tctx.fill();
-
-    requestAnimationFrame(animateTrail);
-}
-animateTrail();
-
-// ===== Botão Apostila com senha =====
+// ===== Botão Apostila com senha (abre na mesma aba sempre) =====
 document.getElementById('apostilaBtn').addEventListener('click', function(){
     const senha = prompt("Digite a senha para acessar a Apostila:");
     if(senha === "durso16"){
-        window.open("https://apostila.cupiditys.lol/?cmsphacks.xyz","_blank");
+        window.open("https://apostilas-cmsp.vercel.app/","apostilaWindow");
     } else {
         alert("Senha incorreta!");
     }
