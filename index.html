@@ -7,6 +7,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
+/* === CSS (igual ao anterior) === */
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family: 'Orbitron', sans-serif; background:#0f172a; color:#fff; text-align:center; overflow-x:hidden; }
 
@@ -61,8 +62,8 @@ p { margin-bottom:20px; font-size:1.1em; color:#fca5a5; }
         <a class="btn" href="https://matific.cupiditys.lol/dashboard?cmsphacks.xyz" target="_blank"><i class="fas fa-calculator"></i> Matific</a>
         <a class="btn" href="https://redacao.cupiditys.lol/" target="_blank"><i class="fas fa-pencil-alt"></i> Redação</a>
         <a class="btn" href="https://speakify.cupiditys.lol/?cmsphacks.xyz" target="_blank"><i class="fas fa-comment-dots"></i> Speak SP</a>
-        <!-- Novo botão -->
         <a class="btn" href="https://crimsonstrauss.xyz/khan" target="_blank"><i class="fas fa-graduation-cap"></i> Khan Academy</a>
+        <a class="btn" href="https://crimsonstrauss.xyz/alura" target="_blank"><i class="fas fa-laptop-code"></i> Alura</a>
     </div>
 
     <!-- Calculadoras e Dicionário -->
@@ -115,7 +116,7 @@ p { margin-bottom:20px; font-size:1.1em; color:#fca5a5; }
 </div>
 
 <script>
-// ===== Partículas de fundo =====
+// === Partículas ===
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w,h;
@@ -160,7 +161,7 @@ function animate(){
     requestAnimationFrame(animate); 
 }
 
-// ===== Calculadora Normal =====
+// === Calculadoras ===
 function calcNormal(op){
     const n1 = parseFloat(document.getElementById('num1').value);
     const n2 = parseFloat(document.getElementById('num2').value);
@@ -175,7 +176,6 @@ function calcNormal(op){
     document.getElementById('resultNormal').innerText="Resultado: "+res;
 }
 
-// ===== Calculadora de Frações =====
 function calcFrac(op){
     const n1=parseInt(document.getElementById('f1n').value);
     const d1=parseInt(document.getElementById('f1d').value);
@@ -195,7 +195,6 @@ function calcFrac(op){
     document.getElementById('resultFrac').innerText="Resultado: "+resNum+"/"+resDen;
 }
 
-// ===== Calculadora Avançada =====
 function calcAdvanced(){
     const input = document.getElementById('advInput').value;
     try{
@@ -205,11 +204,11 @@ function calcAdvanced(){
 }
 function clearAdv(){ document.getElementById('advInput').value=''; document.getElementById('resultAdv').innerText=''; }
 
-// ===== Dicionário Simples =====
+// === Dicionário simples ===
 const dictionary={ "matemática":"Estudo de números, formas e padrões.","física":"Ciência que estuda a natureza e as leis do universo.","química":"Ciência que estuda a composição e propriedades da matéria.","história":"Estudo do passado humano.","português":"Língua oficial do Brasil." };
 function searchDict(){ const word=document.getElementById('dictInput').value.trim().toLowerCase(); if(word in dictionary) document.getElementById('dictResult').innerText=dictionary[word]; else document.getElementById('dictResult').innerText="Palavra não encontrada no dicionário."; }
 
-// ===== Botão Apostila com senha (abre na mesma aba sempre) =====
+// === Apostila com senha ===
 document.getElementById('apostilaBtn').addEventListener('click', function(){
     const senha = prompt("Digite a senha para acessar a Apostila:");
     if(senha === "miguelsouza"){
