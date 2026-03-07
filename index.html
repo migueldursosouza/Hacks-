@@ -1,1 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sala do Futuro</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+body{
+background:#120000;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+overflow:hidden;
+}
+
+/* FUNDO */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* CONTAINER */
+
+.container{
+width:900px;
+max-width:95%;
+}
+
+/* LOGIN */
+
+#loginBox{
+background:#0d0d0d;
+padding:40px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 0 20px rgba(255,0,100,0.3);
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+background:black;
+border:2px solid purple;
+color:white;
+border-radius:8px;
+}
+
+/* BOTÕES GOJO */
+
+button{
+
+padding:12px 20px;
+margin:5px;
+border-radius:10px;
+border:none;
+color:white;
+cursor:pointer;
+font-weight:bold;
+
+background:linear-gradient(45deg,#ff003c,#0066ff);
+
+box-shadow:
+0 0 10px #ff003c,
+0 0 10px #0066ff;
+
+transition:0.3s;
+
+}
+
+button:hover{
+
+transform:scale(1.12);
+
+box-shadow:
+0 0 20px #ff003c,
+0 0 20px #0066ff,
+0 0 40px purple;
+
+}
+
+/* PAINEL */
+
+#painel{
+display:none;
+text-align:center;
+}
+
+/* CARDS */
+
+.links{
+
+margin-top:30px;
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;
+
+}
+
+.card{
+
+background:#0d0d0d;
+padding:25px;
+border-radius:12px;
+transition:0.3s;
+
+box-shadow:
+0 0 10px #ff003c33,
+0 0 10px #0066ff33;
+
+}
+
+.card:hover{
+
+transform:scale(1.08);
+
+box-shadow:
+0 0 20px #ff003c,
+0 0 20px #0066ff;
+
+}
+
+.card a{
+
+text-decoration:none;
+color:white;
+font-size:18px;
+
+}
+
+/* ADMIN */
+
+#admin{
+margin-top:20px;
+display:none;
+}
+
+/* CALCULADORA */
+
+.calculadora{
+
+margin-top:40px;
+
+background:#0d0d0d;
+padding:20px;
+border-radius:12px;
+
+display:inline-block;
+
+}
+
+#display{
+
+width:100%;
+height:45px;
+margin-bottom:15px;
+font-size:20px;
+text-align:right;
+padding:10px;
+
+background:black;
+border:2px solid purple;
+color:white;
+
+}
+
+.calc{
+
+display:grid;
+grid-template-columns:repeat(4,60px);
+gap:10px;
+justify-content:center;
+
+}
+
+.calc button{
+
+width:60px;
+height:45px;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="container">
+
+<!-- LOGIN -->
+
+<div id="loginBox">
+
+<h2>Login</h2>
+
+<input id="email" placeholder="Email">
+<input id="senha" type="password" placeholder="Senha">
+
+<button onclick="login()">Entrar</button>
+<button onclick="cadastrar()">Cadastrar</button>
+
+<p id="msg"></p>
+
+</div>
+
+<!-- PAINEL -->
+
+<div id="painel">
+
+<h2>Painel</h2>
+
+<p id="usuarioLogado"></p>
+
+<button onclick="logout()">Logout</button>
+
+<div class="links">
+
+<div class="card">
+<a href="https://redacao.cupiditys.lol/?cmsphacks.xyz" target="_blank">Redação</a>
+</div>
+
+<div class="card">
+<a href="https://khan.cupiditys.lol/?cmsphacks.xyz" target="_blank">Khan</a>
+</div>
+
+<div class="card">
+<a href="https://matific.cupiditys.lol/dashboard?cmsphacks.xyz" target="_blank">Matific</a>
+</div>
+
+<div class="card">
+<a href="https://taskitos.cupiditys.lol/?cmsphacks.xyz" target="_blank">Taskitos</a>
+</div>
+
+</div>
+
+<div id="admin">
+
+<h3>Painel Admin</h3>
+<div id="listaUsuarios"></div>
+
+</div>
+
+<!-- CALCULADORA -->
+
+<div class="calculadora">
+
+<input id="display" disabled>
+
+<div class="calc">
+
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button onclick="add('/')">÷</button>
+
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button onclick="add('*')">×</button>
+
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button onclick="add('-')">−</button>
+
+<button onclick="add('0')">0</button>
+<button onclick="add('.')">.</button>
+<button onclick="calcular()">=</button>
+<button onclick="add('+')">+</button>
+
+<button onclick="limpar()">C</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* BANCO DE USUÁRIOS */
+
+function criptografar(s){
+return btoa(s)
+}
+
+function cadastrar(){
+
+let email=emailInput().value
+let senha=senhaInput().value
+
+if(email==""||senha==""){
+msg("Preencha tudo")
+return
+}
+
+let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
+
+usuarios.push({email:email,senha:criptografar(senha)})
+
+localStorage.setItem("usuarios",JSON.stringify(usuarios))
+
+msg("Usuário cadastrado")
+
+}
+
+function login(){
+
+let email=emailInput().value
+let senha=criptografar(senhaInput().value)
+
+let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
+
+let user=usuarios.find(u=>u.email===email&&u.senha===senha)
+
+if(user){
+
+localStorage.setItem("usuarioLogado",email)
+
+loginBox.style.display="none"
+painel.style.display="block"
+
+usuarioLogado.innerText="Usuário: "+email
+
+if(email==="admin"){
+admin.style.display="block"
+mostrarUsuarios()
+}
+
+}else{
+msg("Login incorreto")
+}
+
+}
+
+function logout(){
+localStorage.removeItem("usuarioLogado")
+location.reload()
+}
+
+function mostrarUsuarios(){
+
+let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
+
+listaUsuarios.innerHTML=""
+
+usuarios.forEach((u,i)=>{
+listaUsuarios.innerHTML+=`<p>${u.email} <button onclick="deletar(${i})">X</button></p>`
+})
+
+}
+
+function deletar(i){
+
+let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
+
+usuarios.splice(i,1)
+
+localStorage.setItem("usuarios",JSON.stringify(usuarios))
+
+mostrarUsuarios()
+
+}
+
+if(localStorage.getItem("usuarioLogado")){
+loginBox.style.display="none"
+painel.style.display="block"
+usuarioLogado.innerText="Usuário: "+localStorage.getItem("usuarioLogado")
+}
+
+/* CALCULADORA */
+
+function add(v){display.value+=v}
+
+function calcular(){
+try{display.value=eval(display.value)}
+catch{display.value="Erro"}
+}
+
+function limpar(){display.value=""}
+
+/* HELPERS */
+
+function emailInput(){return document.getElementById("email")}
+function senhaInput(){return document.getElementById("senha")}
+function msg(t){document.getElementById("msg").innerText=t}
+
+/* PARTICULAS */
+
+const canvas=document.getElementById("particles")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let particles=[]
+
+for(let i=0;i<120;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5),
+vy:(Math.random()-0.5)
+
+})
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach(p=>{
+
+p.x+=p.vx
+p.y+=p.vy
+
+if(p.x<0||p.x>canvas.width)p.vx*=-1
+if(p.y<0||p.y>canvas.height)p.vy*=-1
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,2,0,Math.PI*2)
+ctx.fillStyle="red"
+ctx.fill()
+
+})
+
+for(let i=0;i<particles.length;i++){
+
+for(let j=i+1;j<particles.length;j++){
+
+let dx=particles[i].x-particles[j].x
+let dy=particles[i].y-particles[j].y
+let dist=Math.sqrt(dx*dx+dy*dy)
+
+if(dist<120){
+
+ctx.beginPath()
+ctx.moveTo(particles[i].x,particles[i].y)
+ctx.lineTo(particles[j].x,particles[j].y)
+ctx.strokeStyle="rgba(255,0,80,0.2)"
+ctx.stroke()
+
+}
+
+}
+
+}
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+</script>
+
+</body>
+  </html>
