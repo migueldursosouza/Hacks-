@@ -1,481 +1,416 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Sala do Futuro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blox Store - Contas Exclusivas de Blox Fruits</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+        :root {
+            --bg-dark: #0f1016;
+            --card-bg: #181a24;
+            --accent-purple: #8b5cf6;
+            --accent-glow: #7c3aed;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --badge-bg: #2d1b4e;
+        }
 
-<style>
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding-bottom: 50px;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Orbitron',sans-serif;
-}
+        header {
+            position: relative;
+            background: linear-gradient(180deg, #1e1b4b 0%, var(--bg-dark) 100%);
+            padding: 40px 15px;
+            text-align: center;
+            border-bottom: 1px solid #2e1065;
+        }
 
-body{
-background:#120000;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-overflow:hidden;
-}
+        header h1 {
+            font-size: 2.2rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent-glow);
+            margin-bottom: 10px;
+        }
 
-/* FUNDO */
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
+        /* BOTÕES DO TOPO */
+        .top-btns {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
 
-/* CONTAINER */
+        .header-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-purple);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
 
-.container{
-width:900px;
-max-width:95%;
-}
+        .header-btn:hover {
+            background-color: var(--accent-purple);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
 
-/* LOGIN */
+        /* MODAIS / POPUPS */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
 
-#loginBox{
-background:#0d0d0d;
-padding:40px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 0 20px rgba(255,0,100,0.3);
-}
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-input{
-width:100%;
-padding:12px;
-margin:10px 0;
-background:black;
-border:2px solid purple;
-color:white;
-border-radius:8px;
-}
+        .modal-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-purple);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
 
-/* BOTÕES GOJO */
+        .pix-key-box {
+            background-color: #0f1016;
+            border: 1px solid #374151;
+            color: #4ade80;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            word-break: break-all;
+            margin: 10px 0;
+        }
 
-button{
+        .btn-copy {
+            background-color: #374151;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
 
-padding:12px 20px;
-margin:5px;
-border-radius:10px;
-border:none;
-color:white;
-cursor:pointer;
-font-weight:bold;
+        .btn-copy:hover {
+            background-color: var(--accent-purple);
+        }
 
-background:linear-gradient(45deg,#ff003c,#0066ff);
+        .btn-action {
+            background-color: #22c55e;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
 
-box-shadow:
-0 0 10px #ff003c,
-0 0 10px #0066ff;
+        .btn-action:hover {
+            background-color: #16a34a;
+        }
 
-transition:0.3s;
+        .btn-close {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid #374151;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
 
-}
+        /* CONTAINER PRINCIPAL */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
 
-button:hover{
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
 
-transform:scale(1.12);
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid #374151;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
 
-box-shadow:
-0 0 20px #ff003c,
-0 0 20px #0066ff,
-0 0 40px purple;
+        .filter-btn.active {
+            background-color: var(--accent-purple);
+            border-color: var(--accent-purple);
+        }
 
-}
+        .grid-accounts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
 
-/* PAINEL */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #27272a;
+            display: flex;
+            flex-direction: column;
+        }
 
-#painel{
-display:none;
-text-align:center;
-}
+        .card-img-container {
+            width: 100%;
+            height: 190px;
+            background-color: #12131a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* CARDS */
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.links{
+        .card-body {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
 
-margin-top:30px;
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
 
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
+        .badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
 
-}
+        .badge {
+            background-color: var(--badge-bg);
+            color: #c4b5fd;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
 
-.card{
+        .card-details {
+            list-style: none;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            flex-grow: 1;
+        }
 
-background:#0d0d0d;
-padding:25px;
-border-radius:12px;
-transition:0.3s;
+        .card-details li {
+            margin-bottom: 6px;
+        }
 
-box-shadow:
-0 0 10px #ff003c33,
-0 0 10px #0066ff33;
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #27272a;
+            padding-top: 15px;
+            margin-top: auto;
+        }
 
-}
+        .price {
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: #4ade80;
+        }
 
-.card:hover{
-
-transform:scale(1.08);
-
-box-shadow:
-0 0 20px #ff003c,
-0 0 20px #0066ff;
-
-}
-
-.card a{
-
-text-decoration:none;
-color:white;
-font-size:18px;
-
-}
-
-/* ADMIN */
-
-#admin{
-margin-top:20px;
-display:none;
-}
-
-/* CALCULADORA */
-
-.calculadora{
-
-margin-top:40px;
-
-background:#0d0d0d;
-padding:20px;
-border-radius:12px;
-
-display:inline-block;
-
-}
-
-#display{
-
-width:100%;
-height:45px;
-margin-bottom:15px;
-font-size:20px;
-text-align:right;
-padding:10px;
-
-background:black;
-border:2px solid purple;
-color:white;
-
-}
-
-.calc{
-
-display:grid;
-grid-template-columns:repeat(4,60px);
-gap:10px;
-justify-content:center;
-
-}
-
-.calc button{
-
-width:60px;
-height:45px;
-
-}
-
-</style>
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
-
 <body>
 
-<canvas id="particles"></canvas>
-
-<div class="container">
-
-<!-- LOGIN -->
-
-<div id="loginBox">
-
-<h2>Login</h2>
-
-<input id="email" placeholder="Email">
-<input id="senha" type="password" placeholder="Senha">
-
-<button onclick="login()">Entrar</button>
-<button onclick="cadastrar()">Cadastrar</button>
-
-<p id="msg"></p>
-
-</div>
-
-<!-- PAINEL -->
-
-<div id="painel">
-
-<h2>Painel</h2>
-
-<p id="usuarioLogado"></p>
-
-<button onclick="logout()">Logout</button>
-
-<div class="links">
-
-<div class="card">
-<a href="https://redacao.cupiditys.lol/?cmsphacks.xyz" target="_blank">Redação</a>
-</div>
-
-<div class="card">
-<a href="https://khan.cupiditys.lol/?cmsphacks.xyz" target="_blank">Khan</a>
-</div>
-
-<div class="card">
-<a href="https://matific.cupiditys.lol/dashboard?cmsphacks.xyz" target="_blank">Matific</a>
-</div>
-
-<div class="card">
-<a href="https://taskitos.cupiditys.lol/?cmsphacks.xyz" target="_blank">Taskitos</a>
-</div>
-
-</div>
-
-<div id="admin">
-
-<h3>Painel Admin</h3>
-<div id="listaUsuarios"></div>
-
-</div>
-
-<!-- CALCULADORA -->
-
-<div class="calculadora">
-
-<input id="display" disabled>
-
-<div class="calc">
-
-<button onclick="add('7')">7</button>
-<button onclick="add('8')">8</button>
-<button onclick="add('9')">9</button>
-<button onclick="add('/')">÷</button>
-
-<button onclick="add('4')">4</button>
-<button onclick="add('5')">5</button>
-<button onclick="add('6')">6</button>
-<button onclick="add('*')">×</button>
-
-<button onclick="add('1')">1</button>
-<button onclick="add('2')">2</button>
-<button onclick="add('3')">3</button>
-<button onclick="add('-')">−</button>
-
-<button onclick="add('0')">0</button>
-<button onclick="add('.')">.</button>
-<button onclick="calcular()">=</button>
-<button onclick="add('+')">+</button>
-
-<button onclick="limpar()">C</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-/* BANCO DE USUÁRIOS */
-
-function criptografar(s){
-return btoa(s)
-}
-
-function cadastrar(){
-
-let email=emailInput().value
-let senha=senhaInput().value
-
-if(email==""||senha==""){
-msg("Preencha tudo")
-return
-}
-
-let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
-
-usuarios.push({email:email,senha:criptografar(senha)})
-
-localStorage.setItem("usuarios",JSON.stringify(usuarios))
-
-msg("Usuário cadastrado")
-
-}
-
-function login(){
-
-let email=emailInput().value
-let senha=criptografar(senhaInput().value)
-
-let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
-
-let user=usuarios.find(u=>u.email===email&&u.senha===senha)
-
-if(user){
-
-localStorage.setItem("usuarioLogado",email)
-
-loginBox.style.display="none"
-painel.style.display="block"
-
-usuarioLogado.innerText="Usuário: "+email
-
-if(email==="admin"){
-admin.style.display="block"
-mostrarUsuarios()
-}
-
-}else{
-msg("Login incorreto")
-}
-
-}
-
-function logout(){
-localStorage.removeItem("usuarioLogado")
-location.reload()
-}
-
-function mostrarUsuarios(){
-
-let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
-
-listaUsuarios.innerHTML=""
-
-usuarios.forEach((u,i)=>{
-listaUsuarios.innerHTML+=`<p>${u.email} <button onclick="deletar(${i})">X</button></p>`
-})
-
-}
-
-function deletar(i){
-
-let usuarios=JSON.parse(localStorage.getItem("usuarios"))||[]
-
-usuarios.splice(i,1)
-
-localStorage.setItem("usuarios",JSON.stringify(usuarios))
-
-mostrarUsuarios()
-
-}
-
-if(localStorage.getItem("usuarioLogado")){
-loginBox.style.display="none"
-painel.style.display="block"
-usuarioLogado.innerText="Usuário: "+localStorage.getItem("usuarioLogado")
-}
-
-/* CALCULADORA */
-
-function add(v){display.value+=v}
-
-function calcular(){
-try{display.value=eval(display.value)}
-catch{display.value="Erro"}
-}
-
-function limpar(){display.value=""}
-
-/* HELPERS */
-
-function emailInput(){return document.getElementById("email")}
-function senhaInput(){return document.getElementById("senha")}
-function msg(t){document.getElementById("msg").innerText=t}
-
-/* PARTICULAS */
-
-const canvas=document.getElementById("particles")
-const ctx=canvas.getContext("2d")
-
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-
-let particles=[]
-
-for(let i=0;i<120;i++){
-
-particles.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-vx:(Math.random()-0.5),
-vy:(Math.random()-0.5)
-
-})
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-particles.forEach(p=>{
-
-p.x+=p.vx
-p.y+=p.vy
-
-if(p.x<0||p.x>canvas.width)p.vx*=-1
-if(p.y<0||p.y>canvas.height)p.vy*=-1
-
-ctx.beginPath()
-ctx.arc(p.x,p.y,2,0,Math.PI*2)
-ctx.fillStyle="red"
-ctx.fill()
-
-})
-
-for(let i=0;i<particles.length;i++){
-
-for(let j=i+1;j<particles.length;j++){
-
-let dx=particles[i].x-particles[j].x
-let dy=particles[i].y-particles[j].y
-let dist=Math.sqrt(dx*dx+dy*dy)
-
-if(dist<120){
-
-ctx.beginPath()
-ctx.moveTo(particles[i].x,particles[i].y)
-ctx.lineTo(particles[j].x,particles[j].y)
-ctx.strokeStyle="rgba(255,0,80,0.2)"
-ctx.stroke()
-
-}
-
-}
-
-}
-
-requestAnimationFrame(draw)
-
-}
-
-draw()
-
-</script>
-
+    <header>
+        <div class="top-btns">
+            <!-- BOTÃO SUPORTE -->
+            <a href="https://api.whatsapp.com/send?phone=5511965245363&text=Ol%C3%A1!%20Preciso%20de%20ajuda%20com%20o%20Suporte%20da%20loja." target="_blank" class="header-btn">
+                💬 Suporte
+            </a>
+            <!-- BOTÃO AVISOS -->
+            <button class="header-btn" onclick="openModal('noticeModal')">
+                ❓ Avisos
+            </button>
+        </div>
+
+        <h1>Blox Store ⚡</h1>
+        <p>As melhores contas de Blox Fruits com entrega imediata e o melhor preço!</p>
+    </header>
+
+    <!-- MODAL DE AVISO -->
+    <div class="modal-overlay" id="noticeModal">
+        <div class="modal-box">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">🛠️</div>
+            <h3 style="color: #fff; margin-bottom: 10px;">Aviso Importante</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">
+                Nossa loja ainda está em <b>reformulação</b>! Por conta disso, no momento temos poucas opções de compras disponíveis.
+            </p>
+            <button class="btn-close" onclick="closeModal('noticeModal')">Entendido</button>
+        </div>
+    </div>
+
+    <!-- MODAL DO PIX -->
+    <div class="modal-overlay" id="pixModal">
+        <div class="modal-box">
+            <h3 style="color: #fff;" id="pixTitle">Pagamento via Pix</h3>
+            <p style="color: #4ade80; font-size: 1.3rem; font-weight: bold; margin: 5px 0;" id="pixPrice">R$ 0,00</p>
+            
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Chave Pix (E-mail):</p>
+            <div class="pix-key-box" id="pixKey">migueldurso44@gmail.com</div>
+            <button class="btn-copy" onclick="copyPixKey()">📋 Copiar Chave Pix</button>
+
+            <!-- AVISO EM AMARELO -->
+            <p style="font-size: 0.8rem; color: #eab308; margin-bottom: 15px; line-height: 1.4;">
+                ⚠️ Faça o pagamento no seu banco e depois clique abaixo para falar no Suporte!<br>
+                <b>Atenção:</b> Caso houver qualquer tentativa de golpe, chamaremos as autoridades.
+            </p>
+
+            <a id="btnSuportePix" href="#" target="_blank" class="btn-action">
+                ✅ Já fiz o Pix! Ir para o Suporte
+            </a>
+            
+            <button class="btn-close" onclick="closeModal('pixModal')">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="filters">
+            <button class="filter-btn active">Todas</button>
+        </div>
+
+        <div class="grid-accounts">
+            <!-- CONTA 1 -->
+            <div class="card">
+                <div class="card-img-container">
+                    <img src="https://static.wikia.nocookie.net/blox-fruits/images/1/10/ControlFruit.png" alt="Control Fruit" class="card-img">
+                </div>
+                <div class="card-body">
+                    <h2 class="card-title">Conta Control + Soul Guitar + GodHuman</h2>
+                    <div class="badges">
+                        <span class="badge">GodHuman</span>
+                        <span class="badge">Control</span>
+                    </div>
+                    <ul class="card-details">
+                        <li>• Soul Guitar & CDK</li>
+                        <li>• Control Awake</li>
+                        <li>• Beli: 17 Milhões</li>
+                    </ul>
+                    <div class="card-footer">
+                        <span class="price">R$ 25,00</span>
+                        <button class="btn-action" style="width: auto;" onclick="openPixModal('Conta Control + Soul Guitar + GodHuman', '25,00')">
+                            Comprar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Blox Store - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function openPixModal(accountName, price) {
+            document.getElementById('pixTitle').innerText = accountName;
+            document.getElementById('pixPrice').innerText = 'R$ ' + price;
+            
+            const msg = encodeURIComponent(`Olá Suporte! Realizei o Pix de R$ ${price} para o e-mail migueldurso44@gmail.com referente à: ${accountName}. Vim buscar meu acesso!`);
+            document.getElementById('btnSuportePix').href = `https://api.whatsapp.com/send?phone=5511965245363&text=${msg}`;
+            
+            openModal('pixModal');
+        }
+
+        function copyPixKey() {
+            const keyText = document.getElementById('pixKey').innerText;
+            navigator.clipboard.writeText(keyText);
+            alert("Chave Pix copiada com sucesso!");
+        }
+    </script>
 </body>
-  </html>
+</html>
