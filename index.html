@@ -204,7 +204,7 @@
 
         .grid-accounts {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 20px;
         }
 
@@ -226,44 +226,61 @@
         }
 
         .card-body {
-            padding: 18px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .card-title {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #fff;
+            line-height: 1.3;
         }
 
         .badges {
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .badge {
             background-color: var(--badge-bg);
             color: #c4b5fd;
-            font-size: 0.75rem;
-            padding: 4px 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 5px 10px;
             border-radius: 6px;
+            border: 1px solid #4c1d95;
+        }
+
+        .badge-green {
+            background-color: #064e3b;
+            color: #6ee7b7;
+            border-color: #047857;
         }
 
         .card-details {
             list-style: none;
             margin-bottom: 20px;
-            color: var(--text-muted);
-            font-size: 0.88rem;
+            color: #d1d5db;
+            font-size: 0.92rem;
             flex-grow: 1;
         }
 
         .card-details li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            line-height: 1.4;
+        }
+
+        .card-details li strong {
+            color: #fff;
         }
 
         .card-footer {
@@ -276,7 +293,7 @@
         }
 
         .price {
-            font-size: 1.35rem;
+            font-size: 1.45rem;
             font-weight: bold;
             color: #4ade80;
         }
@@ -345,14 +362,14 @@
 
     <div class="container">
         <div class="filters">
-            <button class="filter-btn active">Todas</button>
+            <button class="filter-btn active">Todas as Contas</button>
         </div>
 
         <div class="grid-accounts">
             <!-- CONTA 1 -->
             <div class="card">
                 <div class="card-img-container">
-                    <!-- BANNER DA CONTA EM SVG -->
+                    <!-- BANNER DA CONTA EM SVG DETALHADO -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
                       <defs>
                         <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -372,82 +389,106 @@
                         </filter>
                       </defs>
 
+                      <!-- Fundo -->
                       <rect width="600" height="400" fill="url(#bgGrad)" />
                       <rect x="8" y="8" width="584" height="384" fill="none" stroke="url(#purpleGlow)" stroke-width="3" rx="12" opacity="0.6" />
                       <circle cx="500" cy="80" r="120" fill="#7c3aed" opacity="0.15" filter="url(#glow)" />
                       <circle cx="100" cy="320" r="100" fill="#ec4899" opacity="0.1" filter="url(#glow)" />
 
-                      <rect x="35" y="30" width="140" height="28" fill="#6d28d9" rx="14" />
-                      <text x="105" y="49" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="12" fill="#ffffff" text-anchor="middle" letter-spacing="1">
-                        ★ GODHUMAN
+                      <!-- TAG TOPO -->
+                      <rect x="35" y="25" width="160" height="28" fill="#6d28d9" rx="14" />
+                      <text x="115" y="44" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="12" fill="#ffffff" text-anchor="middle" letter-spacing="1">
+                        ★ GODHUMAN (GOD 1)
                       </text>
 
-                      <text x="35" y="90" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="28" fill="#ffffff">
-                        CONTA GODHUMAN
+                      <!-- TÍTULOS -->
+                      <text x="35" y="82" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="26" fill="#ffffff">
+                        CONTA GODHUMAN (GOD 1)
                       </text>
-                      <text x="35" y="118" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="18" fill="url(#purpleGlow)">
-                        + SOUL GUITAR &amp; CDK
+                      <text x="35" y="108" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="16" fill="url(#purpleGlow)">
+                        SOUL GUITAR + CDK + FRUTA CONTROL
                       </text>
 
-                      <rect x="35" y="145" width="255" height="60" fill="#1e1b2e" stroke="#3730a3" stroke-width="1.5" rx="10" />
-                      <circle cx="65" cy="175" r="18" fill="#a855f7" opacity="0.2" />
-                      <text x="65" y="182" font-size="20" text-anchor="middle">🎛️</text>
-                      <text x="98" y="168" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="14" fill="#ffffff">Fruta Control</text>
-                      <text x="98" y="187" font-family="'Segoe UI', sans-serif" font-size="12" fill="#9ca3af">Habilidades 1 e 2 Unlocked</text>
+                      <!-- BLOCOS DOS ITENS -->
 
-                      <rect x="305" y="145" width="260" height="60" fill="#1e1b2e" stroke="#831843" stroke-width="1.5" rx="10" />
-                      <circle cx="335" cy="175" r="18" fill="#ec4899" opacity="0.2" />
-                      <text x="335" y="182" font-size="20" text-anchor="middle">🎸</text>
-                      <text x="368" y="168" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="14" fill="#ffffff">Soul Guitar</text>
-                      <text x="368" y="187" font-family="'Segoe UI', sans-serif" font-size="12" fill="#f472b6">Todas Habilidades (Full)</text>
+                      <!-- 1. SOUL GUITAR -->
+                      <rect x="35" y="130" width="255" height="65" fill="#1e1b2e" stroke="#ec4899" stroke-width="1.5" rx="10" />
+                      <circle cx="65" cy="162" r="18" fill="#ec4899" opacity="0.2" />
+                      <text x="65" y="169" font-size="20" text-anchor="middle">🎸</text>
+                      <text x="98" y="154" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="14" fill="#ffffff">Soul Guitar</text>
+                      <text x="98" y="171" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="11" fill="#f472b6">1ª e 2ª Habilidade (FULL)</text>
+                      <text x="98" y="185" font-family="'Segoe UI', sans-serif" font-size="10" fill="#9ca3af">Todas Desbloqueadas</text>
 
-                      <rect x="35" y="220" width="255" height="60" fill="#1e1b2e" stroke="#854d0e" stroke-width="1.5" rx="10" />
-                      <circle cx="65" cy="250" r="18" fill="#eab308" opacity="0.2" />
-                      <text x="65" y="257" font-size="20" text-anchor="middle">⚔️</text>
-                      <text x="98" y="243" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="14" fill="#ffffff">CDK (Cursed Dual)</text>
-                      <text x="98" y="262" font-family="'Segoe UI', sans-serif" font-size="12" fill="#eab308">1ª Habilidade Liberada</text>
+                      <!-- 2. CDK (CURSED DUAL KATANA) -->
+                      <rect x="305" y="130" width="260" height="65" fill="#1e1b2e" stroke="#eab308" stroke-width="1.5" rx="10" />
+                      <circle cx="335" cy="162" r="18" fill="#eab308" opacity="0.2" />
+                      <text x="335" y="169" font-size="20" text-anchor="middle">⚔️</text>
+                      <text x="368" y="154" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="14" fill="#ffffff">Cursed Dual Katana</text>
+                      <text x="368" y="171" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="11" fill="#fde047">CDK - 1ª Habilidade Unlocked</text>
+                      <text x="368" y="185" font-family="'Segoe UI', sans-serif" font-size="10" fill="#9ca3af">Espada Mítica</text>
 
-                      <rect x="305" y="220" width="260" height="60" fill="#1e1b2e" stroke="#1e3a8a" stroke-width="1.5" rx="10" />
-                      <circle cx="335" cy="250" r="18" fill="#3b82f6" opacity="0.2" />
-                      <text x="335" y="257" font-size="20" text-anchor="middle">🎒</text>
-                      <text x="368" y="243" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="14" fill="#ffffff">Inventário Lendário</text>
-                      <text x="368" y="262" font-family="'Segoe UI', sans-serif" font-size="12" fill="#60a5fa">+ Frutas Lendárias</text>
+                      <!-- 3. CONTROL FRUIT -->
+                      <rect x="35" y="210" width="255" height="65" fill="#1e1b2e" stroke="#a855f7" stroke-width="1.5" rx="10" />
+                      <circle cx="65" cy="242" r="18" fill="#a855f7" opacity="0.2" />
+                      <text x="65" y="249" font-size="20" text-anchor="middle">🎛️</text>
+                      <text x="98" y="234" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="14" fill="#ffffff">Fruta Control</text>
+                      <text x="98" y="251" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="11" fill="#c084fc">1ª e 2ª Habilidade Unlocked</text>
+                      <text x="98" y="265" font-family="'Segoe UI', sans-serif" font-size="10" fill="#9ca3af">Despertadas/Liberadas</text>
 
-                      <rect x="35" y="300" width="530" height="65" fill="#12101d" rx="10" stroke="#2e2a45" stroke-width="1" />
+                      <!-- 4. GODHUMAN + INVENTÁRIO -->
+                      <rect x="305" y="210" width="260" height="65" fill="#1e1b2e" stroke="#3b82f6" stroke-width="1.5" rx="10" />
+                      <circle cx="335" cy="242" r="18" fill="#3b82f6" opacity="0.2" />
+                      <text x="335" y="249" font-size="20" text-anchor="middle">🥊</text>
+                      <text x="368" y="234" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="14" fill="#ffffff">GodHuman + Inventário</text>
+                      <text x="368" y="251" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="11" fill="#60a5fa">God 1 + Frutas Lendárias</text>
+                      <text x="368" y="265" font-family="'Segoe UI', sans-serif" font-size="10" fill="#9ca3af">Pronta para PvP</text>
+
+                      <!-- BARRA INFERIOR DE RECURSOS -->
+                      <rect x="35" y="295" width="530" height="70" fill="#12101d" rx="10" stroke="#2e2a45" stroke-width="1" />
                       
-                      <text x="55" y="328" font-size="16">💰</text>
-                      <text x="80" y="328" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="15" fill="#4ade80">17 MILHÕES</text>
-                      <text x="80" y="348" font-family="'Segoe UI', sans-serif" font-size="11" fill="#9ca3af">Beli acumulado</text>
+                      <!-- Beli -->
+                      <text x="55" y="325" font-size="16">💰</text>
+                      <text x="80" y="325" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="14" fill="#4ade80">17 MILHÕES BELI</text>
+                      <text x="80" y="345" font-family="'Segoe UI', sans-serif" font-size="11" fill="#9ca3af">17.000.000 de Beli</text>
 
-                      <line x1="220" y1="312" x2="220" y2="352" stroke="#2e2a45" stroke-width="1" />
+                      <!-- Divisória 1 -->
+                      <line x1="220" y1="308" x2="220" y2="352" stroke="#2e2a45" stroke-width="1" />
 
-                      <text x="240" y="328" font-size="16">🔮</text>
-                      <text x="265" y="328" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="15" fill="#c084fc">1.000 FRAGS</text>
-                      <text x="265" y="348" font-family="'Segoe UI', sans-serif" font-size="11" fill="#9ca3af">Fragmentos</text>
+                      <!-- Fragmentos -->
+                      <text x="240" y="325" font-size="16">🔮</text>
+                      <text x="265" y="325" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="14" fill="#c084fc">1.000 FRAGS</text>
+                      <text x="265" y="345" font-family="'Segoe UI', sans-serif" font-size="11" fill="#9ca3af">1.000 Fragmentos</text>
 
-                      <line x1="390" y1="312" x2="390" y2="352" stroke="#2e2a45" stroke-width="1" />
+                      <!-- Divisória 2 -->
+                      <line x1="385" y1="308" x2="385" y2="352" stroke="#2e2a45" stroke-width="1" />
 
-                      <text x="410" y="328" font-size="16">⚡</text>
-                      <text x="435" y="328" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="14" fill="#ffffff">ENTREGA</text>
-                      <text x="435" y="348" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="12" fill="#38bdf8">IMEDIATA</text>
+                      <!-- Entrega -->
+                      <text x="405" y="325" font-size="16">⚡</text>
+                      <text x="430" y="325" font-family="'Segoe UI', sans-serif" font-weight="800" font-size="13" fill="#ffffff">ENTREGA</text>
+                      <text x="430" y="345" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="11" fill="#38bdf8">IMEDIATA</text>
                     </svg>
                 </div>
                 <div class="card-body">
-                    <h2 class="card-title">Conta Control + Soul Guitar + GodHuman</h2>
+                    <h2 class="card-title">Conta GodHuman (God 1) + Soul Guitar (Full) + CDK + Control</h2>
                     <div class="badges">
-                        <span class="badge">GodHuman</span>
-                        <span class="badge">Control</span>
+                        <span class="badge">GodHuman (God 1)</span>
+                        <span class="badge">Soul Guitar Full</span>
                         <span class="badge">CDK</span>
+                        <span class="badge">Fruta Control</span>
+                        <span class="badge badge-green">17M Beli</span>
                     </div>
                     <ul class="card-details">
-                        <li>• Soul Guitar Full &amp; CDK</li>
-                        <li>• Fruta Control (Habilidades 1 e 2)</li>
-                        <li>• 17 Milhões de Beli &amp; 1.000 Frags</li>
-                        <li>• Inventário com Frutas Lendárias</li>
+                        <li>🥊 <strong>Estilo de Luta:</strong> GodHuman (God 1)</li>
+                        <li>🎸 <strong>Soul Guitar (Arma Mítica):</strong> 1ª e 2ª Habilidade Desbloqueadas (FULL)</li>
+                        <li>⚔️ <strong>Cursed Dual Katana (CDK):</strong> Espada Mítica com 1ª Habilidade Desbloqueada</li>
+                        <li>🎛️ <strong>Fruta Control:</strong> 1ª e 2ª Habilidade Desbloqueadas</li>
+                        <li>💰 <strong>Beli:</strong> 17.000.000 (17 Milhões)</li>
+                        <li>🔮 <strong>Fragmentos:</strong> 1.000 Frags</li>
+                        <li>🎒 <strong>Inventário:</strong> Com Frutas Lendárias inclusas</li>
                     </ul>
                     <div class="card-footer">
                         <span class="price">R$ 25,00</span>
-                        <button class="btn-action" style="width: auto;" onclick="openPixModal('Conta Control + Soul Guitar + GodHuman', '25,00')">
+                        <button class="btn-action" style="width: auto;" onclick="openPixModal('Conta GodHuman (God 1) + Soul Guitar Full + CDK + Control', '25,00')">
                             Comprar
                         </button>
                     </div>
@@ -485,5 +526,6 @@
             alert("Chave Pix copiada com sucesso!");
         }
     </script>
+    
 </body>
 </html>
